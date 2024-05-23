@@ -20,6 +20,16 @@ public class Cliente extends DefaultEntity {
     
     private Endereco Endereco;
 
+    private String cpf;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     @OneToOne
     @JoinColumn(name = "id_usuario", unique = true)
     private Usuario usuario;
