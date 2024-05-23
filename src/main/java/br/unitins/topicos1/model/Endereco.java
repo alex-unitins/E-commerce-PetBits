@@ -1,8 +1,8 @@
 package br.unitins.topicos1.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class Endereco {
     private String rua;
     private String numero;
