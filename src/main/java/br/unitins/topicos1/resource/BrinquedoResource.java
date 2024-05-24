@@ -58,6 +58,7 @@ public class BrinquedoResource {
     }
     
     @POST
+    @RolesAllowed("Admin")
     public Response create(BrinquedoDTO dto) {
         return Response.status(Status.CREATED).entity(brinquedoService.create(dto)).build();
     }
@@ -69,6 +70,7 @@ public class BrinquedoResource {
     }
 
     @PUT
+    @RolesAllowed("Admin")
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, BrinquedoDTO dto) {
         brinquedoService.update(id, dto);
@@ -77,6 +79,7 @@ public class BrinquedoResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
         brinquedoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.PetiscoDTO;
 import br.unitins.topicos1.service.PetiscoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -32,6 +33,7 @@ public class PetiscoResource {
     }
     @GET
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(petiscoService.findById(id)).build();
     }
@@ -62,6 +64,7 @@ public class PetiscoResource {
         return Response.ok(petiscoService.findByIdMarca(idMarca)).build();
     }
     @POST
+    @RolesAllowed("Admin")
     public Response create(PetiscoDTO dto) {
         return Response.status(Status.CREATED).entity(petiscoService.create(dto)).build();
     }
@@ -73,6 +76,7 @@ public class PetiscoResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response update(@PathParam("id") Long id, PetiscoDTO dto) {
         petiscoService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
@@ -80,6 +84,7 @@ public class PetiscoResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
         petiscoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

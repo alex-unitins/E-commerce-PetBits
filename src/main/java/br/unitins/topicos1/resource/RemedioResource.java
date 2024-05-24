@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.RemedioDTO;
 import br.unitins.topicos1.service.RemedioService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -26,6 +27,7 @@ public class RemedioResource {
     @GET
 
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(remedioService.findById(id)).build();
     }
@@ -63,16 +65,19 @@ public class RemedioResource {
     }
     @GET
     @Path("/search/pesoAnimal/{pesoAnimal}")
+    
     public Response findByPesoAnimal(@PathParam("pesoAnimal") Integer pesoAnimal){
         return Response.ok(remedioService.findByPesoAnimal(pesoAnimal)).build();
     }
     @POST
+    @RolesAllowed("Admin")
     public Response create(RemedioDTO dto) {
         return Response.status(Status.CREATED).entity(remedioService.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response update(@PathParam("id") Long id, RemedioDTO dto) {
         remedioService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
@@ -80,6 +85,7 @@ public class RemedioResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
         remedioService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

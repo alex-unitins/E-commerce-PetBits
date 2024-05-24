@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.SaborDTO;
 import br.unitins.topicos1.service.SaborService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -26,6 +27,7 @@ public class SaborResource {
     @GET
 
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(saborService.findById(id)).build();
     }
@@ -48,6 +50,7 @@ public class SaborResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response update(@PathParam("id") Long id, SaborDTO dto) {
         saborService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
@@ -55,6 +58,7 @@ public class SaborResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
         saborService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.RacaoDTO;
 import br.unitins.topicos1.service.RacaoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -26,6 +27,7 @@ public class RacaoResource {
     @GET
 
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(racaoService.findById(id)).build();
     }
@@ -73,12 +75,14 @@ public class RacaoResource {
     }
 
     @POST
+    @RolesAllowed("Admin")
     public Response create(RacaoDTO dto) {
         return Response.status(Status.CREATED).entity(racaoService.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response update(@PathParam("id") Long id, RacaoDTO dto) {
         racaoService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
@@ -86,6 +90,7 @@ public class RacaoResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
         racaoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.service.MarcaService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -26,6 +27,7 @@ public class MarcaResource {
     @GET
 
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(marcaService.findById(id)).build();
     }
@@ -44,12 +46,14 @@ public class MarcaResource {
 
 
     @POST
+    @RolesAllowed("Admin")
     public Response create(MarcaDTO dto) {
         return Response.status(Status.CREATED).entity(marcaService.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response update(@PathParam("id") Long id, MarcaDTO dto) {
         marcaService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
@@ -57,6 +61,7 @@ public class MarcaResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
         marcaService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
