@@ -79,6 +79,7 @@ public class ClienteServiceImpl implements ClienteService {
             clienteBanco.getListaTelefone().add(t);
         }
         clienteBanco.setEmail(dto.email());
+        clienteBanco.setEndereco(dto.endereco());
 
     }
 
