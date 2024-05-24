@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.BrinquedoDTO;
 import br.unitins.topicos1.service.BrinquedoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -35,6 +36,7 @@ public class BrinquedoResource {
         return Response.ok(brinquedoService.findAll()).build();
     }
     @GET
+    @RolesAllowed("Admin")
     @Path("/search/tipoBrinquedo/{tipoBrinquedo}")
     public Response findoByIdTipoBrinquedo(@PathParam("tipoBrinquedo") Integer idTipo){
         return Response.ok(brinquedoService.findByIdTipoBrinquedo(idTipo)).build();

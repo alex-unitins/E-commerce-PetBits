@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.AuthUsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.service.AdminService;
+import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;
 import jakarta.inject.Inject;
@@ -28,6 +29,9 @@ public class AuthResource {
     @Inject
     public JwtService jwtService;
 
+    @Inject
+    public ClienteService clienteService;
+
     @POST
     public Response login(AuthUsuarioDTO dto) {
         String hash = hashService.getHashSenha(dto.senha());
@@ -35,7 +39,7 @@ public class AuthResource {
         UsuarioResponseDTO usuario = null;
         // perfil 2 para admin e 1 para cliente
         if (dto.perfil() == 1) {
-            return Response.status(Status.NOT_FOUND).build();
+            usuario = clienteService.login(dto.username(), hash);
         } else if (dto.perfil() == 2) {
             usuario = adminService.login(dto.username(), hash);
         } else {
