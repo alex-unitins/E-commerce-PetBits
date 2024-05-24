@@ -1,4 +1,4 @@
-/* package br.unitins.topicos1.service;
+package br.unitins.topicos1.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +44,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = new Cliente();
         cliente.setNome(dto.nome());
         cliente.setEmail(dto.email());
-        cliente.setCargo(dto.cargo());
-        cliente.setSalario(dto.salario());
+        cliente.setCpf(dto.email());
         cliente.setListaTelefone(new ArrayList<Telefone>());
         cliente.setUsuario(usuario);
 
@@ -55,7 +54,9 @@ public class ClienteServiceImpl implements ClienteService {
             t.setNumero(tel.numero());
             cliente.getListaTelefone().add(t);
         }
+        
 
+        cliente.setEndereco(dto.endereco());
         clienteRepository.persist(cliente);
 
         return ClienteResponseDTO.valueOf(cliente);
@@ -68,8 +69,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         clienteBanco.setNome(dto.nome());
         clienteBanco.setEmail(dto.email());
-        clienteBanco.setCargo(dto.cargo());
-        clienteBanco.setSalario(dto.salario());
+        clienteBanco.setCpf(dto.email());
         clienteBanco.getListaTelefone().clear();
 
         for (TelefoneDTO tel : dto.telefones()) {
@@ -78,6 +78,7 @@ public class ClienteServiceImpl implements ClienteService {
             t.setNumero(tel.numero());
             clienteBanco.getListaTelefone().add(t);
         }
+        clienteBanco.setEmail(dto.email());
 
     }
 
@@ -111,4 +112,4 @@ public class ClienteServiceImpl implements ClienteService {
         return UsuarioResponseDTO.valueOfCliente(cliente);
     }
 
-}*/
+}
