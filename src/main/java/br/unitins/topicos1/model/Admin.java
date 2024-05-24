@@ -27,7 +27,7 @@ public class Admin extends DefaultEntity {
     private Usuario usuario;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_cliente")
+    @JoinColumn(name = "id_admin")
     private List<Telefone> listaTelefone;
 
     public Double getSalario() {

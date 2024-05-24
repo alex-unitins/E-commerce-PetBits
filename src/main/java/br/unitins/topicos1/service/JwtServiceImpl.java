@@ -21,6 +21,7 @@ public class JwtServiceImpl implements JwtService {
 
         Set<String> roles = new HashSet<String>();
         roles.add("Admin");
+        roles.add("Cliente");
 
         return Jwt.issuer("unitins-jwt")
             .subject(dto.username())

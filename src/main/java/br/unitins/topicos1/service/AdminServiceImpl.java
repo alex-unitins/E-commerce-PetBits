@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService {
 
         Usuario usuario = new Usuario();
         usuario.setUsername(dto.username());
-        // gereando o hash da senha
+        // gerando o hash da senha
         usuario.setSenha(hashService.getHashSenha(dto.senha()));
 
         // salvando o usuario
@@ -102,9 +102,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<AdminResponseDTO> findByNome(String nome) {
-        return adminRepository.findByNome(nome).stream()
-        .map(e -> AdminResponseDTO.valueOf(e)).toList();
-    }
+//        return adminRepository.findByNome(nome).stream()
+//        .map(e -> AdminResponseDTO.valueOf(e)).toList();
+        return null;
+   }
 
     public UsuarioResponseDTO login(String username, String senha) {
         Admin admin = adminRepository.findByUsernameAndSenha(username, senha);
