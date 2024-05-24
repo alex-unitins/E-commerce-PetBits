@@ -35,11 +35,11 @@ public class AdminResource {
         return Response.ok(adminService.findAll()).build();
     }
 
-    // @GET
-    // @Path("/search/nome/{nome}")
-    // public Response findByNome(@PathParam("nome") String nome) {
-    //     return Response.ok(adminService.findByNome(nome)).build();
-    // }
+    @GET
+     @Path("/search/nome/{nome}")
+    public Response findByNome(@PathParam("nome") String nome) {
+         return Response.ok(adminService.findByNome(nome)).build();
+    }
 
     @POST
     public Response create(AdminDTO dto) {

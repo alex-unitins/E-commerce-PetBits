@@ -102,9 +102,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<AdminResponseDTO> findByNome(String nome) {
-//        return adminRepository.findByNome(nome).stream()
-//        .map(e -> AdminResponseDTO.valueOf(e)).toList();
-        return null;
+        return adminRepository.findByNome(nome).stream()
+        .map(e -> AdminResponseDTO.valueOf(e)).toList();
    }
 
     public UsuarioResponseDTO login(String username, String senha) {

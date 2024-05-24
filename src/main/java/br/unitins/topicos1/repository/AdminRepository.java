@@ -10,11 +10,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class AdminRepository implements PanacheRepository<Admin> {
 
     public List<Admin> findByNome(String nome) {
-        return find("UPPER(pessoaFisica.nome) LIKE ?1", "%"+ nome.toUpperCase() + "%").list();
+        return find("UPPER(nome) LIKE ?1", "%"+ nome.toUpperCase() + "%").list();
     }
 
     public Admin findByUsernameAndSenha(String username, String senha) {
-        return find("pessoaFisica.usuario.username = ?1 AND pessoaFisica.usuario.senha = ?2", username, senha).firstResult();
+        return find("usuario.username = ?1 AND usuario.senha = ?2", username, senha).firstResult();
     }
 
 }
