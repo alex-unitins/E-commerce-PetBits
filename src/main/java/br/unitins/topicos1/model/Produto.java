@@ -11,27 +11,37 @@ public abstract class Produto extends DefaultEntity {
     @Column(length = 60, nullable = false)
     private String nome;
 
+    private String nomeImagem;
+
+    
     @Column(length = 10, nullable = false)
     private Double preco;
-
+    
     @Column(length = 100, nullable = false)
     private String descricao;
-
+    
     @ManyToOne
     @JoinColumn(name = "id_marca")
     private Marca marca;
-
+    
     @Column(length = 100, nullable = false)
     private String animal;
+    
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
 
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
+    }
     public String getDescricao() {
         return descricao;
     }
-
+    
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
+    
     public Marca getMarca() {
         return marca;
     }

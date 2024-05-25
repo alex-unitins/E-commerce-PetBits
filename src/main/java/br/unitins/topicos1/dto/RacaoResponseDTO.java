@@ -7,6 +7,7 @@ import br.unitins.topicos1.model.Racao;
 public record RacaoResponseDTO(
     Long id,
     String nome,
+    String nomeImagem,
     Double preco,
     String descricao,
     SaborResponseDTO sabor,
@@ -20,6 +21,7 @@ public record RacaoResponseDTO(
         return new RacaoResponseDTO(
             racao.getId(), 
             racao.getNome(),
+            racao.getNomeImagem(),
             racao.getPreco(),
             racao.getDescricao(),
             SaborResponseDTO.valueOf(racao.getSabor()),
