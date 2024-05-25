@@ -22,19 +22,19 @@ public class RacaoFileServiceImpl implements FileService {
     private final String PATH_USER = System.getProperty("user.home")
         + File.separator + "quarkus"
         + File.separator + "images"
-        + File.separator + "Racao" + File.separator;
+        + File.separator + "racao" + File.separator;
 
     @Inject
-    RacaoRepository RacaoRepository;
+    RacaoRepository racaoRepository;
 
     @Override
     @Transactional
     public void salvar(Long id, String nomeImagem, byte[] imagem) {
-        Racao Racao = RacaoRepository.findById(id);
+        Racao racao = racaoRepository.findById(id);
 
         try {
             String novoNomeImagem = salvarImagem(imagem, nomeImagem);
-            Racao.setNomeImagem(novoNomeImagem);
+            racao.setNomeImagem(novoNomeImagem);
             // excluir a imagem antiga (trabalho pra quem????)
         } catch (IOException e) {
             throw new ValidationException("imagem", e.toString());
