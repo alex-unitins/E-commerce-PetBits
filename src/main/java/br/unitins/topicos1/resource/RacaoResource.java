@@ -106,6 +106,7 @@ public class RacaoResource {
     }
     @PATCH
     @Path("/{id}/image/upload")
+    @RolesAllowed("Admin")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response upload(@PathParam("id") Long id, @MultipartForm ImageForm form) {
         fileService.salvar(id, form.getNomeImagem(), form.getImagem());
