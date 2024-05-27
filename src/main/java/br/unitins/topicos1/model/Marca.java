@@ -15,6 +15,16 @@ public class Marca extends DefaultEntity {
     @Column(length = 18, nullable = false)
     private String cnpj;
 
+    private String nomeImagem;
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
+    }
+
     public String getCnpj() {
         return cnpj;
     }
