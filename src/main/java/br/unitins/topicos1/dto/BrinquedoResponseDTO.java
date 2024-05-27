@@ -11,7 +11,9 @@ public record BrinquedoResponseDTO(
     MarcaResponseDTO marca,
     String animal,
     String material,
-    TipoBrinquedo tipoBrinquedo
+    TipoBrinquedo tipoBrinquedo,
+    String nomeImagem
+
 ) {
     public static BrinquedoResponseDTO valueOf(Brinquedo brinquedo) {
         
@@ -23,7 +25,8 @@ public record BrinquedoResponseDTO(
             MarcaResponseDTO.valueOf(brinquedo.getMarca()),
             brinquedo.getAnimal(),
             brinquedo.getMaterial(),
-            brinquedo.getTipoBrinquedo()
+            brinquedo.getTipoBrinquedo(),
+            brinquedo.getNomeImagem()
             );
     }
     

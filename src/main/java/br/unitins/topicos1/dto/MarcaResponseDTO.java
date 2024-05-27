@@ -6,14 +6,18 @@ public record MarcaResponseDTO (
     Long id,
     String nome,
     String emailContato,
-    String cnpj
+    String cnpj,
+    String nomeImagem
+
 ) {
     public static MarcaResponseDTO valueOf(Marca marca) {
         return new MarcaResponseDTO(
             marca.getId(), 
             marca.getNome(), 
             marca.getEmailContato(),
-            marca.getCnpj()
+            marca.getCnpj(),
+            marca.getNomeImagem()
+
             );
     }
     

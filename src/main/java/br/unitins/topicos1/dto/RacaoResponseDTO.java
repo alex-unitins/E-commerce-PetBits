@@ -15,6 +15,7 @@ public record RacaoResponseDTO(
     String animal,
     Idade idade,
     PesoProduto pesoProduto
+
 ) {
     public static RacaoResponseDTO valueOf(Racao racao) {
         

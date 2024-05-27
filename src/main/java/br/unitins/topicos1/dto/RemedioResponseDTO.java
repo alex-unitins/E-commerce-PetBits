@@ -13,7 +13,8 @@ public record RemedioResponseDTO(
     MarcaResponseDTO marca,
     String animal,
     Idade idade,
-    PesoAnimal pesoAnimal
+    PesoAnimal pesoAnimal,
+    String nomeImagem
     
 ) {
     public static RemedioResponseDTO valueOf(Remedio remedio) {
@@ -27,7 +28,8 @@ public record RemedioResponseDTO(
             MarcaResponseDTO.valueOf(remedio.getMarca()),
             remedio.getAnimal(),
             remedio.getIdade(),
-            remedio.getPesoAnimal()
+            remedio.getPesoAnimal(),
+            remedio.getNomeImagem()
             );
     }
     
