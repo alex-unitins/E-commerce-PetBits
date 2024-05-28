@@ -26,9 +26,9 @@ INSERT INTO petisco (nome, preco, descricao, unidades, pesoProduto, id_marca, an
 INSERT INTO racao (nome, preco, descricao, idade, pesoProduto, id_marca, id_sabor, animal) VALUES ('Premium para filhotes', 35.99, 'Ração balanceada para filhotes', 2, 4, 1, 2,'cães e gatos');
 INSERT INTO racao (nome, preco, descricao, idade, pesoProduto, id_marca, id_sabor, animal) VALUES ('Natural para gatos', 28.75, 'Ração natural com ingredientes selecionados para gatos', 3,4, 3, 1,'gato');
 
-INSERT INTO usuario(username, senha) values ("jonata", "senha");
-INSERT INTO usuario(username,senha) values ("cleiton", "senhassa");
+INSERT INTO usuario(username, senha) values ('jonata', 'PIEH9CgpvP+YoLEem5fmoM3Jm4j3T6ItKZTZ1AgrV88=');
+INSERT INTO usuario(username,senha) values ('cleiton', '00QUydFSCxRZUL4yGYTi181zKihS7v6mifvvGIElga4=');
 
-INSERT INTO cliente(id_usuario,email,nome, endereco) values(2,"cleito@gmail.com","cleiton da silva", null);
+INSERT INTO cliente(id_usuario,email,nome,cidade,cpf,cep,rua,estado) values(2,'cleito@gmail.com','cleiton da silva','Palmas','289123','2131','203 sul','Tocantins');
 
 
