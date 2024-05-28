@@ -1,10 +1,10 @@
 package br.unitins.topicos1.dto;
 
-public record PetiscoPedidoDTO(
+public record RemedioPedidoDTO(
     Double preco,
     Double desconto,
     Integer quantidade,
-    Long idPetisco
+    Long idRemedio
 ) {
 
 }
