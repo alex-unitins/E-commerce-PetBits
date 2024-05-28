@@ -2,7 +2,6 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.AdminDTO;
 import br.unitins.topicos1.service.AdminService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;

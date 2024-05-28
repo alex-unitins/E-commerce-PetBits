@@ -1,11 +1,11 @@
 package br.unitins.topicos1.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
 
-@MappedSuperclass
+@Entity
 public abstract class Produto extends DefaultEntity {
 
     @Column(length = 60, nullable = false)

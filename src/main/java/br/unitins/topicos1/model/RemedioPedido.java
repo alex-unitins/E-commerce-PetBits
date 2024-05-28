@@ -5,15 +5,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class ItemPedido extends DefaultEntity {
+public class RemedioPedido extends DefaultEntity {
 
     private Double preco;
     private Double desconto;
     private Integer quantidade;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto")
-    private Produto produto;
+    @JoinColumn(name = "id_remedio")
+    private Remedio remedio;
 
     public Double getPreco() {
         return preco;
@@ -39,12 +39,12 @@ public class ItemPedido extends DefaultEntity {
         this.quantidade = quantidade;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Remedio getRemedio() {
+        return remedio;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setRemedio(Remedio remedio) {
+        this.remedio = remedio;
     }
 
 }
