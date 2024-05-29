@@ -42,46 +42,53 @@ public class PedidoServiceImpl implements PedidoService {
         List<RacaoPedido> racao = new ArrayList<RacaoPedido>();
 
         for (RacaoPedidoDTO racaoDTO : dto.racao()) {
-            RacaoPedido racaoPedido = new RacaoPedido();
-            racaoPedido.setDesconto(racaoDTO.desconto());
-            racaoPedido.setPreco(racaoDTO.preco());
-            total += racaoDTO.preco();
-            racao.add(racaoPedido);
+            if(racaoDTO.quantidade()>0){
+                RacaoPedido racaoPedido = new RacaoPedido();
+                racaoPedido.setDesconto(racaoDTO.desconto());
+                racaoPedido.setPreco(racaoDTO.preco());
+                total += racaoDTO.preco();
+                
+            }
         }
 
         List<BrinquedoPedido> brinquedo = new ArrayList<BrinquedoPedido>();
 
         for (BrinquedoPedidoDTO brinquedoDTO : dto.brinquedo()) {
+            if(brinquedoDTO.quantidade()>0){
             BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
             brinquedoPedido.setDesconto(brinquedoDTO.desconto());
             brinquedoPedido.setPreco(brinquedoDTO.preco());
             total += brinquedoDTO.preco();
-            brinquedo.add(brinquedoPedido);
+            
+            }
         }
         List<PetiscoPedido> petisco = new ArrayList<PetiscoPedido>();
 
         for (PetiscoPedidoDTO petiscoDTO : dto.petisco()) {
+            if(petiscoDTO.quantidade()>0){
             PetiscoPedido petiscoPedido = new PetiscoPedido();
             petiscoPedido.setDesconto(petiscoDTO.desconto());
             petiscoPedido.setPreco(petiscoDTO.preco());
             total += petiscoDTO.preco();
-            petisco.add(petiscoPedido);
+            
+            }
         }
         List<RemedioPedido> remedio = new ArrayList<RemedioPedido>();
 
         for (RemedioPedidoDTO remedioDTO : dto.remedio()) {
+            if(remedioDTO.quantidade()>0){
             RemedioPedido remedioPedido = new RemedioPedido();
             remedioPedido.setDesconto(remedioDTO.desconto());
             remedioPedido.setPreco(remedioDTO.preco());
             total += remedioDTO.preco();
-            remedio.add(remedioPedido);
+            
+            }
         }
         pedido.setTotal(total);
         pedido.setRemedio(remedio);
         pedido.setPetisco(petisco);
         pedido.setRacao(racao);
         pedido.setBrinquedo(brinquedo);
-
         pedidoRepository.persist(pedido);
         return PedidoResponseDTO.valueOf(pedido);
     }
