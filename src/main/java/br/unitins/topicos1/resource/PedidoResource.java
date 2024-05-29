@@ -24,7 +24,7 @@ public class PedidoResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("Admin")
+    @RolesAllowed("Cliente")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(pedidoService.findById(id)).build();
     }
