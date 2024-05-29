@@ -21,20 +21,20 @@ public class Pedido extends DefaultEntity {
 
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_racao")
+    @JoinColumn(name = "id_racaopedido")
     private List<RacaoPedido> racao;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_brinquedo")
+    @JoinColumn(name = "id_brinquedopedido")
     private List<BrinquedoPedido> brinquedo;
 
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_remedio")
+    @JoinColumn(name = "id_remediopedido")
     private List<RemedioPedido> remedio;
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_petisco")
+    @JoinColumn(name = "id_petiscopedido")
     private List<PetiscoPedido> petisco;
     
     public List<RacaoPedido> getRacao() {
