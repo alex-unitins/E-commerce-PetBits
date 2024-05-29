@@ -7,10 +7,14 @@ import java.util.List;
 import br.unitins.topicos1.dto.BrinquedoPedidoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
+import br.unitins.topicos1.dto.PetiscoPedidoDTO;
 import br.unitins.topicos1.dto.RacaoPedidoDTO;
+import br.unitins.topicos1.dto.RemedioPedidoDTO;
 import br.unitins.topicos1.model.BrinquedoPedido;
 import br.unitins.topicos1.model.Pedido;
+import br.unitins.topicos1.model.PetiscoPedido;
 import br.unitins.topicos1.model.RacaoPedido;
+import br.unitins.topicos1.model.RemedioPedido;
 import br.unitins.topicos1.repository.ClienteRepository;
 import br.unitins.topicos1.repository.PedidoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -35,7 +39,6 @@ public class PedidoServiceImpl implements PedidoService {
         double total =0;
         pedido.setData(LocalDateTime.now());
         pedido.setCliente(clienteRepository.findById(dto.idCliente()));
-        // total calculado
         List<RacaoPedido> racao = new ArrayList<RacaoPedido>();
 
         for (RacaoPedidoDTO racaoDTO : dto.racao()) {
@@ -55,7 +58,27 @@ public class PedidoServiceImpl implements PedidoService {
             total += brinquedoDTO.preco();
             brinquedo.add(brinquedoPedido);
         }
+        List<PetiscoPedido> petisco = new ArrayList<PetiscoPedido>();
 
+        for (PetiscoPedidoDTO petiscoDTO : dto.petisco()) {
+            PetiscoPedido petiscoPedido = new PetiscoPedido();
+            petiscoPedido.setDesconto(petiscoDTO.desconto());
+            petiscoPedido.setPreco(petiscoDTO.preco());
+            total += petiscoDTO.preco();
+            petisco.add(petiscoPedido);
+        }
+        List<RemedioPedido> remedio = new ArrayList<RemedioPedido>();
+
+        for (RemedioPedidoDTO remedioDTO : dto.remedio()) {
+            RemedioPedido remedioPedido = new RemedioPedido();
+            remedioPedido.setDesconto(remedioDTO.desconto());
+            remedioPedido.setPreco(remedioDTO.preco());
+            total += remedioDTO.preco();
+            remedio.add(remedioPedido);
+        }
+        pedido.setTotal(total);
+        pedido.setRemedio(remedio);
+        pedido.setPetisco(petisco);
         pedido.setRacao(racao);
         pedido.setBrinquedo(brinquedo);
 
