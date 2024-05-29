@@ -84,13 +84,7 @@ public class Pedido extends DefaultEntity {
         this.total = total;
     }
 
-    public List<RacaoPedido> getItens() {
-        return racao;
-    }
-
-    public void setItens(List<RacaoPedido> racao) {
-        this.racao = racao;
-    }
+   
 
     public Cliente getCliente() {
         return cliente;
