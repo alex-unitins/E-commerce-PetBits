@@ -27,6 +27,17 @@ public abstract class Produto extends DefaultEntity {
     @Column(length = 100, nullable = false)
     private String animal;
     
+    @Column
+    private int estoque;
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
     public String getNomeImagem() {
         return nomeImagem;
     }

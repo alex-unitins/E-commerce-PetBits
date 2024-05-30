@@ -46,7 +46,7 @@ public class PedidoServiceImpl implements PedidoService {
                 RacaoPedido racaoPedido = new RacaoPedido();
                 racaoPedido.setDesconto(racaoDTO.desconto());
                 racaoPedido.setPreco(racaoDTO.preco());
-                total += racaoDTO.preco()*(racaoDTO.desconto()/100+1);
+                total += racaoDTO.preco()*(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
                 
             }
         }
@@ -58,7 +58,7 @@ public class PedidoServiceImpl implements PedidoService {
             BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
             brinquedoPedido.setDesconto(brinquedoDTO.desconto());
             brinquedoPedido.setPreco(brinquedoDTO.preco());
-            total += brinquedoDTO.preco()*(brinquedoDTO.desconto()/100+1);
+            total += brinquedoDTO.preco()*(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
             
             }
         }
@@ -69,7 +69,7 @@ public class PedidoServiceImpl implements PedidoService {
             PetiscoPedido petiscoPedido = new PetiscoPedido();
             petiscoPedido.setDesconto(petiscoDTO.desconto());
             petiscoPedido.setPreco(petiscoDTO.preco());
-            total += petiscoDTO.preco()*(petiscoDTO.desconto()/100+1);
+            total += petiscoDTO.preco()*(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
             
             }
         }
@@ -80,7 +80,7 @@ public class PedidoServiceImpl implements PedidoService {
             RemedioPedido remedioPedido = new RemedioPedido();
             remedioPedido.setDesconto(remedioDTO.desconto());
             remedioPedido.setPreco(remedioDTO.preco());
-            total += remedioDTO.preco()*(remedioDTO.desconto()/100+1);
+            total += remedioDTO.preco()*(remedioDTO.desconto()/100+1)*(remedioDTO.quantidade());
             
             }
         }
