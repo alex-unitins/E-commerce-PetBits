@@ -22,5 +22,7 @@ public record BrinquedoDTO(
     @Size(min = 3, max = 60, message = "O tamanho do campo animal deve ser entre 4 e 60 caracteres.")
     String animal,
     @NotNull(message = "O id do tipo de brinquedo deste produto deve ser informado")
-    Integer idTipoBrinquedo
+    Integer idTipoBrinquedo, 
+    @NotNull(message = "O número de brinquedos no estoque deve ser informado")
+    Integer estoque
 ) {}

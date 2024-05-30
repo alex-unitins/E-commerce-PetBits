@@ -24,6 +24,8 @@ public record PetiscoDTO(
     @Size(min = 3, max = 60, message = "O tamanho do campo animal deve ser entre 4 e 60 caracteres.")
     String animal,
     @NotNull(message = "O id do peso do pacote do petisco deve ser informado")
-    Integer idPesoProduto
+    Integer idPesoProduto,
+    @NotNull(message = "O número de petiscos no estoque deve ser informado")
+    Integer estoque
 ) {
 } 

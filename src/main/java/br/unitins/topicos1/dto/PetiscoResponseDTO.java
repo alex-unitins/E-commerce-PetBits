@@ -13,7 +13,8 @@ public record PetiscoResponseDTO(
     MarcaResponseDTO marca,
     String animal,
     PesoProduto pesoProduto,
-    String nomeImagem
+    String nomeImagem,
+    int estoque
 
 ) {
     public static PetiscoResponseDTO valueOf(Petisco petisco) {
@@ -28,7 +29,8 @@ public record PetiscoResponseDTO(
             MarcaResponseDTO.valueOf(petisco.getMarca()),
             petisco.getAnimal(),
             petisco.getPesoProduto(),
-            petisco.getNomeImagem()
+            petisco.getNomeImagem(),
+            petisco.getEstoque()
             );
     }
     

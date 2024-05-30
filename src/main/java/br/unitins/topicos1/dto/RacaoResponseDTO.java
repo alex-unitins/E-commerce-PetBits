@@ -14,7 +14,8 @@ public record RacaoResponseDTO(
     MarcaResponseDTO marca,
     String animal,
     Idade idade,
-    PesoProduto pesoProduto
+    PesoProduto pesoProduto,
+    int estoque
 
 ) {
     public static RacaoResponseDTO valueOf(Racao racao) {
@@ -29,7 +30,8 @@ public record RacaoResponseDTO(
             MarcaResponseDTO.valueOf(racao.getMarca()),
             racao.getAnimal(),
             racao.getIdade(),
-            racao.getPesoProduto()
+            racao.getPesoProduto(),
+            racao.getEstoque()
             );
     }
     

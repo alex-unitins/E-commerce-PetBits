@@ -24,6 +24,8 @@ public record RacaoDTO(
     @NotNull(message = "O id do peso dessa ração deve ser informado")
     Integer idPesoProduto,
     @NotNull(message = "O id da faixa de idade que essa ração atende deve ser informado")
-    Integer idIdade
+    Integer idIdade,
+    @NotNull(message = "O número de ração no estoque deve ser informado")
+    Integer estoque
 ) {
 } 

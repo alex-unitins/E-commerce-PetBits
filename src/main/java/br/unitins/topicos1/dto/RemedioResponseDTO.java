@@ -14,7 +14,8 @@ public record RemedioResponseDTO(
     String animal,
     Idade idade,
     PesoAnimal pesoAnimal,
-    String nomeImagem
+    String nomeImagem,
+    int estoque
     
 ) {
     public static RemedioResponseDTO valueOf(Remedio remedio) {
@@ -29,7 +30,8 @@ public record RemedioResponseDTO(
             remedio.getAnimal(),
             remedio.getIdade(),
             remedio.getPesoAnimal(),
-            remedio.getNomeImagem()
+            remedio.getNomeImagem(),
+            remedio.getEstoque()
             );
     }
     

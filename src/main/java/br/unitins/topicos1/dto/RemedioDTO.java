@@ -24,6 +24,8 @@ public record RemedioDTO(
     @NotNull(message = "Informe o id correspondete a faixa de idade do animal que esse remédio trata")
     Integer idIdade,
     @NotNull(message = "Informe o id correspondete a faixa de peso do animal que esse remédio trata")
-    Integer idPesoAnimal
+    Integer idPesoAnimal,
+    @NotNull(message = "O número de remédios no estoque deve ser informado")
+    Integer estoque
 ) {
 } 

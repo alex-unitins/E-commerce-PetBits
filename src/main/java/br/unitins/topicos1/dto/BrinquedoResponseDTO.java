@@ -12,7 +12,8 @@ public record BrinquedoResponseDTO(
     String animal,
     String material,
     TipoBrinquedo tipoBrinquedo,
-    String nomeImagem
+    String nomeImagem,
+    int estoque
 
 ) {
     public static BrinquedoResponseDTO valueOf(Brinquedo brinquedo) {
@@ -26,7 +27,8 @@ public record BrinquedoResponseDTO(
             brinquedo.getAnimal(),
             brinquedo.getMaterial(),
             brinquedo.getTipoBrinquedo(),
-            brinquedo.getNomeImagem()
+            brinquedo.getNomeImagem(),
+            brinquedo.getEstoque()
             );
     }
     
