@@ -10,13 +10,21 @@ import br.unitins.topicos1.dto.PedidoResponseDTO;
 import br.unitins.topicos1.dto.PetiscoPedidoDTO;
 import br.unitins.topicos1.dto.RacaoPedidoDTO;
 import br.unitins.topicos1.dto.RemedioPedidoDTO;
+import br.unitins.topicos1.model.Brinquedo;
 import br.unitins.topicos1.model.BrinquedoPedido;
 import br.unitins.topicos1.model.Pedido;
+import br.unitins.topicos1.model.Petisco;
 import br.unitins.topicos1.model.PetiscoPedido;
+import br.unitins.topicos1.model.Racao;
 import br.unitins.topicos1.model.RacaoPedido;
+import br.unitins.topicos1.model.Remedio;
 import br.unitins.topicos1.model.RemedioPedido;
+import br.unitins.topicos1.repository.BrinquedoRepository;
 import br.unitins.topicos1.repository.ClienteRepository;
 import br.unitins.topicos1.repository.PedidoRepository;
+import br.unitins.topicos1.repository.PetiscoRepository;
+import br.unitins.topicos1.repository.RacaoRepository;
+import br.unitins.topicos1.repository.RemedioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -31,6 +39,15 @@ public class PedidoServiceImpl implements PedidoService {
     @Inject
     public ClienteRepository clienteRepository;
 
+    @Inject
+    public BrinquedoRepository brinquedoRepository;
+    @Inject
+    public RacaoRepository racaoRepository;
+    @Inject
+    public PetiscoRepository petiscoRepository;
+    @Inject
+    public RemedioRepository remedioRepository;
+
     @Override
     @Transactional
     public PedidoResponseDTO create(@Valid PedidoDTO dto) {
@@ -42,46 +59,50 @@ public class PedidoServiceImpl implements PedidoService {
         List<RacaoPedido> racao = new ArrayList<RacaoPedido>();
 
         for (RacaoPedidoDTO racaoDTO : dto.racao()) {
-            if(racaoDTO.quantidade()>0){
+            Racao racaoBanco = racaoRepository.findById(racaoDTO.idRacao());
+            if(racaoDTO.quantidade()>0 && racaoDTO.quantidade() <= racaoBanco.getEstoque()){
                 RacaoPedido racaoPedido = new RacaoPedido();
                 racaoPedido.setDesconto(racaoDTO.desconto());
                 racaoPedido.setPreco(racaoDTO.preco());
                 total += racaoDTO.preco()*(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
-                
+                racaoBanco.setEstoque(racaoBanco.getEstoque()-racaoDTO.quantidade());
             }
         }
 
         List<BrinquedoPedido> brinquedo = new ArrayList<BrinquedoPedido>();
 
         for (BrinquedoPedidoDTO brinquedoDTO : dto.brinquedo()) {
-            if(brinquedoDTO.quantidade()>0){
+            Brinquedo brinquedoBanco = brinquedoRepository.findById(brinquedoDTO.idBrinquedo());
+            if(brinquedoDTO.quantidade()>0 && brinquedoDTO.quantidade()<=brinquedoBanco.getEstoque()){
             BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
             brinquedoPedido.setDesconto(brinquedoDTO.desconto());
             brinquedoPedido.setPreco(brinquedoDTO.preco());
             total += brinquedoDTO.preco()*(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
-            
+            brinquedoBanco.setEstoque(brinquedoBanco.getEstoque()-brinquedoDTO.quantidade());
             }
         }
         List<PetiscoPedido> petisco = new ArrayList<PetiscoPedido>();
 
         for (PetiscoPedidoDTO petiscoDTO : dto.petisco()) {
-            if(petiscoDTO.quantidade()>0){
+            Petisco petiscoBanco = petiscoRepository.findById(petiscoDTO.idPetisco());
+            if(petiscoDTO.quantidade()>0 && petiscoDTO.quantidade()<=petiscoBanco.getEstoque()){
             PetiscoPedido petiscoPedido = new PetiscoPedido();
             petiscoPedido.setDesconto(petiscoDTO.desconto());
             petiscoPedido.setPreco(petiscoDTO.preco());
             total += petiscoDTO.preco()*(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
-            
+            petiscoBanco.setEstoque(petiscoBanco.getEstoque()-petiscoDTO.quantidade());
             }
         }
         List<RemedioPedido> remedio = new ArrayList<RemedioPedido>();
 
         for (RemedioPedidoDTO remedioDTO : dto.remedio()) {
-            if(remedioDTO.quantidade()>0){
+            Remedio remedioBanco = remedioRepository.findById(remedioDTO.idRemedio());
+            if(remedioDTO.quantidade()>0 && remedioDTO.quantidade()<=remedioBanco.getEstoque()){
             RemedioPedido remedioPedido = new RemedioPedido();
             remedioPedido.setDesconto(remedioDTO.desconto());
             remedioPedido.setPreco(remedioDTO.preco());
-            total += remedioDTO.preco()*(remedioDTO.desconto()/100+1)*(remedioDTO.quantidade());
-            
+            total += remedioDTO.preco()*(remedioDTO.desconto()/100+1)*remedioDTO.quantidade();
+            remedioBanco.setEstoque(remedioBanco.getEstoque()-remedioDTO.quantidade());
             }
         }
         pedido.setTotal(total);
