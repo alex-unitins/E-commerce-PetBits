@@ -19,11 +19,15 @@ import br.unitins.topicos1.model.Racao;
 import br.unitins.topicos1.model.RacaoPedido;
 import br.unitins.topicos1.model.Remedio;
 import br.unitins.topicos1.model.RemedioPedido;
+import br.unitins.topicos1.repository.BrinquedoPedidoRepository;
 import br.unitins.topicos1.repository.BrinquedoRepository;
 import br.unitins.topicos1.repository.ClienteRepository;
 import br.unitins.topicos1.repository.PedidoRepository;
+import br.unitins.topicos1.repository.PetiscoPedidoRepository;
 import br.unitins.topicos1.repository.PetiscoRepository;
+import br.unitins.topicos1.repository.RacaoPedidoRepository;
 import br.unitins.topicos1.repository.RacaoRepository;
+import br.unitins.topicos1.repository.RemedioPedidoRepository;
 import br.unitins.topicos1.repository.RemedioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -47,6 +51,14 @@ public class PedidoServiceImpl implements PedidoService {
     public PetiscoRepository petiscoRepository;
     @Inject
     public RemedioRepository remedioRepository;
+    @Inject
+    public BrinquedoPedidoRepository brinquedoPedidoRepository;
+    @Inject
+    public PetiscoPedidoRepository petiscoPedidoRepository;
+    @Inject
+    public RemedioPedidoRepository remedioPedidoRepository;
+    @Inject
+    public RacaoPedidoRepository racaoPedidoRepository;
 
     @Override
     @Transactional
@@ -64,21 +76,26 @@ public class PedidoServiceImpl implements PedidoService {
                 RacaoPedido racaoPedido = new RacaoPedido();
                 racaoPedido.setDesconto(racaoDTO.desconto());
                 racaoPedido.setPreco(racaoBanco.getPreco());
-                total += racaoDTO.preco()/(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
+                total += racaoPedido.getPreco()/(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
                 racaoBanco.setEstoque(racaoBanco.getEstoque()-racaoDTO.quantidade());
+                racaoPedidoRepository.persist(racaoPedido);
+                racao.add(racaoPedido);
             }
         }
+        
 
         List<BrinquedoPedido> brinquedo = new ArrayList<BrinquedoPedido>();
 
         for (BrinquedoPedidoDTO brinquedoDTO : dto.brinquedo()) {
             Brinquedo brinquedoBanco = brinquedoRepository.findById(brinquedoDTO.idBrinquedo());
             if(brinquedoDTO.quantidade()>0 && brinquedoDTO.quantidade()<=brinquedoBanco.getEstoque()){
-            BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
-            brinquedoPedido.setDesconto(brinquedoDTO.desconto());
-            brinquedoPedido.setPreco(brinquedoBanco.getPreco());
-            total += brinquedoDTO.preco()/(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
-            brinquedoBanco.setEstoque(brinquedoBanco.getEstoque()-brinquedoDTO.quantidade());
+                BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
+                brinquedoPedido.setDesconto(brinquedoDTO.desconto());
+                brinquedoPedido.setPreco(brinquedoBanco.getPreco());
+                total += brinquedoPedido.getPreco()/(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
+                brinquedoBanco.setEstoque(brinquedoBanco.getEstoque()-brinquedoDTO.quantidade());
+                brinquedoPedidoRepository.persist(brinquedoPedido);
+                brinquedo.add(brinquedoPedido);
             }
         }
         List<PetiscoPedido> petisco = new ArrayList<PetiscoPedido>();
@@ -86,11 +103,13 @@ public class PedidoServiceImpl implements PedidoService {
         for (PetiscoPedidoDTO petiscoDTO : dto.petisco()) {
             Petisco petiscoBanco = petiscoRepository.findById(petiscoDTO.idPetisco());
             if(petiscoDTO.quantidade()>0 && petiscoDTO.quantidade()<=petiscoBanco.getEstoque()){
-            PetiscoPedido petiscoPedido = new PetiscoPedido();
-            petiscoPedido.setDesconto(petiscoDTO.desconto());
-            petiscoPedido.setPreco(petiscoBanco.getPreco());
-            total += petiscoDTO.preco()/(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
-            petiscoBanco.setEstoque(petiscoBanco.getEstoque()-petiscoDTO.quantidade());
+                PetiscoPedido petiscoPedido = new PetiscoPedido();
+                petiscoPedido.setDesconto(petiscoDTO.desconto());
+                petiscoPedido.setPreco(petiscoBanco.getPreco());
+                total += petiscoPedido.getPreco()/(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
+                petiscoBanco.setEstoque(petiscoBanco.getEstoque()-petiscoDTO.quantidade());
+                petiscoPedidoRepository.persist(petiscoPedido);
+                petisco.add(petiscoPedido);
             }
         }
         List<RemedioPedido> remedio = new ArrayList<RemedioPedido>();
@@ -98,11 +117,13 @@ public class PedidoServiceImpl implements PedidoService {
         for (RemedioPedidoDTO remedioDTO : dto.remedio()) {
             Remedio remedioBanco = remedioRepository.findById(remedioDTO.idRemedio());
             if(remedioDTO.quantidade()>0 && remedioDTO.quantidade()<=remedioBanco.getEstoque()){
-            RemedioPedido remedioPedido = new RemedioPedido();
-            remedioPedido.setDesconto(remedioDTO.desconto());
-            remedioPedido.setPreco(remedioBanco.getPreco());
-            total += remedioDTO.preco()/(remedioDTO.desconto()/100+1)*remedioDTO.quantidade();
-            remedioBanco.setEstoque(remedioBanco.getEstoque()-remedioDTO.quantidade());
+                RemedioPedido remedioPedido = new RemedioPedido();
+                remedioPedido.setDesconto(remedioDTO.desconto());
+                remedioPedido.setPreco(remedioBanco.getPreco());
+                total += remedioPedido.getPreco()/(remedioDTO.desconto()/100+1)*remedioDTO.quantidade();
+                remedioBanco.setEstoque(remedioBanco.getEstoque()-remedioDTO.quantidade());
+                remedioPedidoRepository.persist(remedioPedido);
+                remedio.add(remedioPedido);
             }
         }
         pedido.setTotal(total);
@@ -110,6 +131,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setPetisco(petisco);
         pedido.setRacao(racao);
         pedido.setBrinquedo(brinquedo);
+        
         pedidoRepository.persist(pedido);
         return PedidoResponseDTO.valueOf(pedido);
     }
