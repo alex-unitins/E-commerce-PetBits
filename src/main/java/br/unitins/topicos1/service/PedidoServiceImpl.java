@@ -63,7 +63,7 @@ public class PedidoServiceImpl implements PedidoService {
             if(racaoDTO.quantidade()>0 && racaoDTO.quantidade() <= racaoBanco.getEstoque()){
                 RacaoPedido racaoPedido = new RacaoPedido();
                 racaoPedido.setDesconto(racaoDTO.desconto());
-                racaoPedido.setPreco(racaoDTO.preco());
+                racaoPedido.setPreco(racaoBanco.getPreco());
                 total += racaoDTO.preco()/(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
                 racaoBanco.setEstoque(racaoBanco.getEstoque()-racaoDTO.quantidade());
             }
@@ -76,7 +76,7 @@ public class PedidoServiceImpl implements PedidoService {
             if(brinquedoDTO.quantidade()>0 && brinquedoDTO.quantidade()<=brinquedoBanco.getEstoque()){
             BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
             brinquedoPedido.setDesconto(brinquedoDTO.desconto());
-            brinquedoPedido.setPreco(brinquedoDTO.preco());
+            brinquedoPedido.setPreco(brinquedoBanco.getPreco());
             total += brinquedoDTO.preco()/(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
             brinquedoBanco.setEstoque(brinquedoBanco.getEstoque()-brinquedoDTO.quantidade());
             }
@@ -88,7 +88,7 @@ public class PedidoServiceImpl implements PedidoService {
             if(petiscoDTO.quantidade()>0 && petiscoDTO.quantidade()<=petiscoBanco.getEstoque()){
             PetiscoPedido petiscoPedido = new PetiscoPedido();
             petiscoPedido.setDesconto(petiscoDTO.desconto());
-            petiscoPedido.setPreco(petiscoDTO.preco());
+            petiscoPedido.setPreco(petiscoBanco.getPreco());
             total += petiscoDTO.preco()/(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
             petiscoBanco.setEstoque(petiscoBanco.getEstoque()-petiscoDTO.quantidade());
             }
@@ -100,7 +100,7 @@ public class PedidoServiceImpl implements PedidoService {
             if(remedioDTO.quantidade()>0 && remedioDTO.quantidade()<=remedioBanco.getEstoque()){
             RemedioPedido remedioPedido = new RemedioPedido();
             remedioPedido.setDesconto(remedioDTO.desconto());
-            remedioPedido.setPreco(remedioDTO.preco());
+            remedioPedido.setPreco(remedioBanco.getPreco());
             total += remedioDTO.preco()/(remedioDTO.desconto()/100+1)*remedioDTO.quantidade();
             remedioBanco.setEstoque(remedioBanco.getEstoque()-remedioDTO.quantidade());
             }

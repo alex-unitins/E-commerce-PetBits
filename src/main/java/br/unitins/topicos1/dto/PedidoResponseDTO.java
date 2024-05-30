@@ -24,13 +24,13 @@ public record PedidoResponseDTO(
                                             .map(BrinquedoPedidoResponseDTO::valueOf)
                                             .toList();                                    
         List<PetiscoPedidoResponseDTO> listaPetisco = pedido.getPetisco()
-        .stream()
-        .map(PetiscoPedidoResponseDTO::valueOf)
-        .toList();                                    
+                                            .stream()
+                                            .map(PetiscoPedidoResponseDTO::valueOf)
+                                            .toList();                                    
         List<RemedioPedidoResponseDTO> listaRemedio = pedido.getRemedio()
-        .stream()
-        .map(RemedioPedidoResponseDTO::valueOf)
-        .toList();                                    
+                                            .stream()
+                                            .map(RemedioPedidoResponseDTO::valueOf)
+                                            .toList();                                    
         return new PedidoResponseDTO(
             pedido.getId(), 
             ClienteResponseDTO.valueOf(pedido.getCliente()),
