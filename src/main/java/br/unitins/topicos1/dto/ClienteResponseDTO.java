@@ -13,7 +13,6 @@ public record ClienteResponseDTO(
     String username,
     String email,
     Endereco endereco,
-    String senha,
     List<TelefoneResponseDTO> telefones
 ) {
     public static ClienteResponseDTO valueOf(Cliente cliente) {
@@ -28,7 +27,6 @@ public record ClienteResponseDTO(
             cliente.getUsuario().getUsername(),
             cliente.getEmail(),
             cliente.getEndereco(),
-            cliente.getUsuario().getSenha(),
             lista);
     }
     
