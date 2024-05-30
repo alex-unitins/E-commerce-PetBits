@@ -38,6 +38,7 @@ public class BrinquedoServiceImpl implements BrinquedoService {
         brinquedo.setMarca(marcaRepository.findById(dto.idMarca()));
         brinquedo.setAnimal(dto.animal());
         brinquedo.setMaterial(dto.material());
+        brinquedo.setEstoque(dto.estoque());
         brinquedo.setTipoBrinquedo(TipoBrinquedo.valueOf(dto.idTipoBrinquedo()));
 
 
@@ -61,6 +62,7 @@ public class BrinquedoServiceImpl implements BrinquedoService {
         brinquedoBanco.setMarca(marcaRepository.findById(dto.idMarca()));
         brinquedoBanco.setAnimal(dto.animal());
         brinquedoBanco.setMaterial(dto.material());
+        brinquedoBanco.setEstoque(dto.estoque());
         brinquedoBanco.setTipoBrinquedo(TipoBrinquedo.valueOf(dto.idTipoBrinquedo()));
     }
     @SuppressWarnings("resource")

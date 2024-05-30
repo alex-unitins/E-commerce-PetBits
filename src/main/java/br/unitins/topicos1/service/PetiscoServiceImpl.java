@@ -43,6 +43,7 @@ public class PetiscoServiceImpl implements PetiscoService {
         petisco.setMarca(marcaRepository.findById(dto.idMarca()));
         petisco.setAnimal(dto.animal());
         petisco.setSabor(saborRepository.findById(dto.idSabor()));
+        petisco.setEstoque(dto.estoque());
         petisco.setPesoProduto(PesoProduto.valueOf(dto.idPesoProduto()));
 
 
@@ -100,6 +101,7 @@ public class PetiscoServiceImpl implements PetiscoService {
         petiscoBanco.setAnimal(dto.animal());
         petiscoBanco.setSabor(saborRepository.findById(dto.idSabor()));
         petiscoBanco.setPesoProduto(PesoProduto.valueOf(dto.idPesoProduto()));
+        petiscoBanco.setEstoque(dto.estoque());
     }
 
     @Override

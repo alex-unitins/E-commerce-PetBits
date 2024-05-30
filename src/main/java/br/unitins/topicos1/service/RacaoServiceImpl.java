@@ -46,7 +46,7 @@ public class RacaoServiceImpl implements RacaoService {
         racao.setSabor(saborRepository.findById(dto.idSabor()));
         racao.setPesoProduto(PesoProduto.valueOf(dto.idPesoProduto()));
         racao.setIdade(Idade.valueOf(dto.idIdade()));
-
+        racao.setEstoque(dto.estoque());
 
         racaoRepository.persist(racao);
         return RacaoResponseDTO.valueOf(racao);
@@ -103,6 +103,7 @@ public class RacaoServiceImpl implements RacaoService {
         validarIdade(dto.idIdade());
         Racao racaoBanco = racaoRepository.findById(id);
 
+        racaoBanco.setEstoque(dto.estoque());
         racaoBanco.setNome(dto.nome());
         racaoBanco.setPreco(dto.preco());
         racaoBanco.setDescricao(dto.descricao());

@@ -40,6 +40,7 @@ public class RemedioServiceImpl implements RemedioService {
         remedio.setDescricao(dto.descricao());
         remedio.setMarca(marcaRepository.findById(dto.idMarca()));
         remedio.setAnimal(dto.animal());
+        remedio.setEstoque(dto.estoque());
         remedio.setPesoAnimal(PesoAnimal.valueOf(dto.idPesoAnimal()));
         remedio.setIdade(Idade.valueOf(dto.idIdade()));
 
@@ -88,6 +89,7 @@ public class RemedioServiceImpl implements RemedioService {
         validarMarca(dto.idMarca());
         validarPesoAnimal(dto.idPesoAnimal());
         validarIdade(dto.idIdade());
+        remedioBanco.setEstoque(dto.estoque());
         remedioBanco.setNome(dto.nome());
         remedioBanco.setPreco(dto.preco());
         remedioBanco.setQuantidade(dto.quantidade());
