@@ -76,6 +76,8 @@ public class PedidoServiceImpl implements PedidoService {
                 RacaoPedido racaoPedido = new RacaoPedido();
                 racaoPedido.setDesconto(racaoDTO.desconto());
                 racaoPedido.setPreco(racaoBanco.getPreco());
+                racaoPedido.setRacao(racaoBanco);
+                racaoPedido.setQuantidade(racaoDTO.quantidade());
                 total += racaoPedido.getPreco()/(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
                 racaoBanco.setEstoque(racaoBanco.getEstoque()-racaoDTO.quantidade());
                 racaoPedidoRepository.persist(racaoPedido);
@@ -92,8 +94,10 @@ public class PedidoServiceImpl implements PedidoService {
                 BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
                 brinquedoPedido.setDesconto(brinquedoDTO.desconto());
                 brinquedoPedido.setPreco(brinquedoBanco.getPreco());
+                brinquedoPedido.setQuantidade(brinquedoDTO.quantidade());
                 total += brinquedoPedido.getPreco()/(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
                 brinquedoBanco.setEstoque(brinquedoBanco.getEstoque()-brinquedoDTO.quantidade());
+                brinquedoPedido.setBrinquedo(brinquedoBanco);
                 brinquedoPedidoRepository.persist(brinquedoPedido);
                 brinquedo.add(brinquedoPedido);
             }
@@ -106,6 +110,8 @@ public class PedidoServiceImpl implements PedidoService {
                 PetiscoPedido petiscoPedido = new PetiscoPedido();
                 petiscoPedido.setDesconto(petiscoDTO.desconto());
                 petiscoPedido.setPreco(petiscoBanco.getPreco());
+                petiscoPedido.setPetisco(petiscoBanco);
+                petiscoPedido.setQuantidade(petiscoDTO.quantidade());
                 total += petiscoPedido.getPreco()/(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
                 petiscoBanco.setEstoque(petiscoBanco.getEstoque()-petiscoDTO.quantidade());
                 petiscoPedidoRepository.persist(petiscoPedido);
@@ -120,6 +126,8 @@ public class PedidoServiceImpl implements PedidoService {
                 RemedioPedido remedioPedido = new RemedioPedido();
                 remedioPedido.setDesconto(remedioDTO.desconto());
                 remedioPedido.setPreco(remedioBanco.getPreco());
+                remedioPedido.setRemedio(remedioBanco);
+                remedioPedido.setQuantidade(remedioDTO.quantidade());
                 total += remedioPedido.getPreco()/(remedioDTO.desconto()/100+1)*remedioDTO.quantidade();
                 remedioBanco.setEstoque(remedioBanco.getEstoque()-remedioDTO.quantidade());
                 remedioPedidoRepository.persist(remedioPedido);
