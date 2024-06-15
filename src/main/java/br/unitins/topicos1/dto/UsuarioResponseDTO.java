@@ -2,6 +2,7 @@ package br.unitins.topicos1.dto;
 
 import br.unitins.topicos1.model.Admin;
 import br.unitins.topicos1.model.Cliente;
+import br.unitins.topicos1.model.Usuario;
 
 public record UsuarioResponseDTO(
     String username,
@@ -20,4 +21,11 @@ public record UsuarioResponseDTO(
                 admin.getNome()
             );
     }
+    public static UsuarioResponseDTO valueOf(Usuario usuario) {
+        return new UsuarioResponseDTO(
+                usuario.getUsername(),
+                null
+            );
+    }
+    
 }

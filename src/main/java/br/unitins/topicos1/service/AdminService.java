@@ -4,14 +4,16 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.AdminDTO;
 import br.unitins.topicos1.dto.AdminResponseDTO;
+import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Telefone;
+import br.unitins.topicos1.model.Usuario;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.core.Response;
 
 public interface AdminService {
 
     public AdminResponseDTO create(@Valid AdminDTO dto);
-
-    public void update(Long id, AdminDTO dto);
 
     public void delete(Long id);
 
@@ -22,4 +24,14 @@ public interface AdminService {
     public List<AdminResponseDTO> findByNome(String nome);
 
     public UsuarioResponseDTO login(String username, String senha);
+
+    public Usuario findByUsername(String username);
+
+    public Response updateUsername(String username);
+
+    public Response updateSenha(String senhaAntiga, String novaSenha);
+    
+    public Response updateEmail(String email);
+    
+    public Response updateListaTelefone(List<TelefoneDTO> listaTelefone);
 }

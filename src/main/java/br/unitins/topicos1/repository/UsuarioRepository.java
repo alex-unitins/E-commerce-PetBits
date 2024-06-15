@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class UsuarioRepository implements PanacheRepository<Usuario> {
 
     public Usuario findByUsername(String username) {
-        return find("UPPER(username) = ?1", username).firstResult();
+        return find("username = ?1", username).firstResult();
     }
 
 }
