@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
 import br.unitins.topicos1.dto.BrinquedoPedidoDTO;
+import br.unitins.topicos1.dto.CartaoCreditoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
 import br.unitins.topicos1.dto.PetiscoPedidoDTO;
@@ -29,6 +32,7 @@ import br.unitins.topicos1.repository.RacaoPedidoRepository;
 import br.unitins.topicos1.repository.RacaoRepository;
 import br.unitins.topicos1.repository.RemedioPedidoRepository;
 import br.unitins.topicos1.repository.RemedioRepository;
+import br.unitins.topicos1.validation.ValidationError;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -36,6 +40,9 @@ import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class PedidoServiceImpl implements PedidoService {
+
+    @Inject
+    JsonWebToken jsonWebToken;
 
     @Inject
     public PedidoRepository pedidoRepository;
@@ -59,6 +66,14 @@ public class PedidoServiceImpl implements PedidoService {
     public RemedioPedidoRepository remedioPedidoRepository;
     @Inject
     public RacaoPedidoRepository racaoPedidoRepository;
+    @Inject
+    public RacaoServiceImpl racaoService;
+    @Inject
+    public PetiscoServiceImpl petiscoService;
+    @Inject
+    public BrinquedoServiceImpl brinquedoService;
+    @Inject
+    public RemedioServiceImpl remedioService;
 
     @Override
     @Transactional
@@ -67,15 +82,18 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedido = new Pedido();
         double total =0;
         pedido.setData(LocalDateTime.now());
-        pedido.setCliente(clienteRepository.findById(dto.idCliente()));
+        
+        pedido.setCliente(clienteRepository.findByUsername(jsonWebToken.getName()));
         List<RacaoPedido> racao = new ArrayList<RacaoPedido>();
 
         for (RacaoPedidoDTO racaoDTO : dto.racao()) {
             Racao racaoBanco = racaoRepository.findById(racaoDTO.idRacao());
-            if(racaoDTO.quantidade()>0 && racaoDTO.quantidade() <= racaoBanco.getEstoque()){
+            if(racaoDTO.quantidade()>0 && (racaoDTO.quantidade() <= racaoBanco.getEstoque())){
+                validarPreco(racaoBanco.getPreco(), racaoDTO.preco());
+                racaoService.validarId(racaoDTO.idRacao());
                 RacaoPedido racaoPedido = new RacaoPedido();
                 racaoPedido.setDesconto(racaoDTO.desconto());
-                racaoPedido.setPreco(racaoBanco.getPreco());
+                racaoPedido.setPreco(racaoDTO.preco());
                 racaoPedido.setRacao(racaoBanco);
                 racaoPedido.setQuantidade(racaoDTO.quantidade());
                 total += racaoPedido.getPreco()/(racaoDTO.desconto()/100+1)*racaoDTO.quantidade();
@@ -91,9 +109,11 @@ public class PedidoServiceImpl implements PedidoService {
         for (BrinquedoPedidoDTO brinquedoDTO : dto.brinquedo()) {
             Brinquedo brinquedoBanco = brinquedoRepository.findById(brinquedoDTO.idBrinquedo());
             if(brinquedoDTO.quantidade()>0 && brinquedoDTO.quantidade()<=brinquedoBanco.getEstoque()){
+                validarPreco(brinquedoBanco.getPreco(), brinquedoDTO.preco());
+                brinquedoService.validarId(brinquedoDTO.idBrinquedo());
                 BrinquedoPedido brinquedoPedido = new BrinquedoPedido();
                 brinquedoPedido.setDesconto(brinquedoDTO.desconto());
-                brinquedoPedido.setPreco(brinquedoBanco.getPreco());
+                brinquedoPedido.setPreco(brinquedoDTO.preco());
                 brinquedoPedido.setQuantidade(brinquedoDTO.quantidade());
                 total += brinquedoPedido.getPreco()/(brinquedoDTO.desconto()/100+1)*brinquedoDTO.quantidade();
                 brinquedoBanco.setEstoque(brinquedoBanco.getEstoque()-brinquedoDTO.quantidade());
@@ -107,9 +127,11 @@ public class PedidoServiceImpl implements PedidoService {
         for (PetiscoPedidoDTO petiscoDTO : dto.petisco()) {
             Petisco petiscoBanco = petiscoRepository.findById(petiscoDTO.idPetisco());
             if(petiscoDTO.quantidade()>0 && petiscoDTO.quantidade()<=petiscoBanco.getEstoque()){
+                validarPreco(petiscoBanco.getPreco(), petiscoDTO.preco());
+                petiscoService.validarId(petiscoDTO.idPetisco());
                 PetiscoPedido petiscoPedido = new PetiscoPedido();
                 petiscoPedido.setDesconto(petiscoDTO.desconto());
-                petiscoPedido.setPreco(petiscoBanco.getPreco());
+                petiscoPedido.setPreco(petiscoDTO.preco());
                 petiscoPedido.setPetisco(petiscoBanco);
                 petiscoPedido.setQuantidade(petiscoDTO.quantidade());
                 total += petiscoPedido.getPreco()/(petiscoDTO.desconto()/100+1)*petiscoDTO.quantidade();
@@ -123,9 +145,11 @@ public class PedidoServiceImpl implements PedidoService {
         for (RemedioPedidoDTO remedioDTO : dto.remedio()) {
             Remedio remedioBanco = remedioRepository.findById(remedioDTO.idRemedio());
             if(remedioDTO.quantidade()>0 && remedioDTO.quantidade()<=remedioBanco.getEstoque()){
+                remedioService.validarId(remedioDTO.idRemedio());
+                validarPreco(remedioBanco.getPreco(), remedioDTO.preco());
                 RemedioPedido remedioPedido = new RemedioPedido();
                 remedioPedido.setDesconto(remedioDTO.desconto());
-                remedioPedido.setPreco(remedioBanco.getPreco());
+                remedioPedido.setPreco(remedioDTO.preco());
                 remedioPedido.setRemedio(remedioBanco);
                 remedioPedido.setQuantidade(remedioDTO.quantidade());
                 total += remedioPedido.getPreco()/(remedioDTO.desconto()/100+1)*remedioDTO.quantidade();
@@ -139,11 +163,19 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setPetisco(petisco);
         pedido.setRacao(racao);
         pedido.setBrinquedo(brinquedo);
-        
+        pedido.setStatus("Não pago");
         pedidoRepository.persist(pedido);
         return PedidoResponseDTO.valueOf(pedido);
     }
-
+    
+    public ValidationError validarPreco(Double precoReal, Double precoPedido) {
+        if (precoReal != precoPedido){
+            ValidationError error = new ValidationError("409", "Preço diferente do cadastrado");
+            error.addFieldError("username", "Username já cadastrado");
+            return error;
+        }
+        return null;
+    }
 
 
     @Override
@@ -166,6 +198,33 @@ public class PedidoServiceImpl implements PedidoService {
     public List<PedidoResponseDTO> findByCliente(Long idCliente) {
         return pedidoRepository.findByCliente(idCliente).stream()
         .map(e -> PedidoResponseDTO.valueOf(e)).toList();
+    }
+    @Override
+    public void PagarPedidoCredito(Long id, CartaoCreditoDTO cartao) {
+        Pedido pedidoPagar = pedidoRepository.findById(id);
+        
+        if(pedidoPagar==null){
+            ValidationError error = new ValidationError("404", "Pedido não encontrado");
+            error.addFieldError("id", "Pedido não encontrado");
+            throw new RuntimeException(error.toString());
+        }
+        if(cartao.limite()<pedidoPagar.getTotal()){
+            ValidationError error = new ValidationError("409", "Limite insuficiente");
+            error.addFieldError("limite", "Limite insuficiente");
+            throw new RuntimeException(error.toString());
+        }
+        pedidoPagar.setStatus("Pago, Crédito");
+    }
+    @Override
+    public void PagarPedidoPix(Long id, String chavePix) {
+        Pedido pedidoPagar = pedidoRepository.findById(id);
+        if(pedidoPagar==null){
+            ValidationError error = new ValidationError("404", "Pedido não encontrado");
+            error.addFieldError("id", "Pedido não encontrado");
+            throw new RuntimeException(error.toString());
+        }
+        pedidoPagar.setStatus("Pago, Pix");
+        
     }
 
 }

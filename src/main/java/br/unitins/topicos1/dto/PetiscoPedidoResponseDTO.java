@@ -6,13 +6,15 @@ public record PetiscoPedidoResponseDTO (
     Long id,
     String nome,
     Double desconto,
-    Integer quantidade
+    Integer quantidade,
+    Long idPetisco
 ) {
     public static PetiscoPedidoResponseDTO valueOf(PetiscoPedido item) {
         return new PetiscoPedidoResponseDTO(
             item.getId(), 
             item.getPetisco().getNome(), 
             item.getDesconto(),
-            item.getQuantidade());
+            item.getQuantidade(),
+            item.getPetisco().getId());
     }
 }

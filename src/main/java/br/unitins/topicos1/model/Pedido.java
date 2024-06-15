@@ -19,7 +19,8 @@ public class Pedido extends DefaultEntity {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    
+    private String status;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_racaopedido")
     private List<RacaoPedido> racao;
@@ -44,7 +45,12 @@ public class Pedido extends DefaultEntity {
     public void setRacao(List<RacaoPedido> racao) {
         this.racao = racao;
     }
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getStatus() {
+        return status;
+    }
     public List<BrinquedoPedido> getBrinquedo() {
         return brinquedo;
     }

@@ -1,5 +1,8 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
+import br.unitins.topicos1.dto.CartaoCreditoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.service.PedidoService;
 import jakarta.annotation.security.RolesAllowed;
@@ -22,21 +25,25 @@ public class PedidoResource {
     @Inject
     public PedidoService pedidoService;
 
+    private static final Logger LOGGER = Logger.getLogger(PedidoResource.class); 
     @GET
     @Path("/{id}")
     @RolesAllowed("Cliente")
     public Response findById(@PathParam("id") Long id) {
+        LOGGER.info("Finding pedido by id: " + id);
         return Response.ok(pedidoService.findById(id)).build();
     }
 
     @GET
     public Response findAll() {
+        LOGGER.info("Finding all pedidos");
         return Response.ok(pedidoService.findAll()).build();
     }
 
     @GET
     @Path("/search/cliente/{id}")
     public Response findByCliente(@PathParam("id") Long id) {
+        LOGGER.info("Finding pedido by cliente: " + id);
         return Response.ok(pedidoService.findByCliente(id)).build();
     }
     
@@ -45,7 +52,21 @@ public class PedidoResource {
     @POST
     @RolesAllowed("Admin")
     public Response create(PedidoDTO dto) {
+        LOGGER.info("Creating pedido");
         return Response.status(Status.CREATED).entity(pedidoService.create(dto)).build();
     }
+    @POST
+    @RolesAllowed("Cliente")
+    public Response pagarCartao(Long id, CartaoCreditoDTO dto) {
+        LOGGER.info("Paying pedido with credit card");
+        return Response.noContent().build();
+    }
+    @POST
+    @RolesAllowed("Cliente")
+    public Response pagarPix(Long id, String chavePix) {
+        LOGGER.info("Paying pedido with pix");
+        return Response.noContent().build();
+    }
+
 
 }

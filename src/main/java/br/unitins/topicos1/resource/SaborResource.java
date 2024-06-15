@@ -1,5 +1,7 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.SaborDTO;
 import br.unitins.topicos1.service.SaborService;
 import jakarta.annotation.security.RolesAllowed;
@@ -24,27 +26,33 @@ public class SaborResource {
     @Inject
     public SaborService saborService;
 
+    private static final Logger LOGGER = Logger.getLogger(SaborResource.class);
+
     @GET
 
     @Path("/{id}")
     @RolesAllowed("Admin")
     public Response findById(@PathParam("id") Long id) {
+        LOGGER.info("Finding sabor by id: " + id);
         return Response.ok(saborService.findById(id)).build();
     }
 
     @GET
     public Response findAll() {
+        LOGGER.info("Finding all sabores");
         return Response.ok(saborService.findAll()).build();
     }
 
     @GET
     @Path("/search/nome/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
+        LOGGER.info("Finding sabor by name: " + nome);
         return Response.ok(saborService.findByNome(nome)).build();
     }
 
     @POST
     public Response create(SaborDTO dto) {
+        LOGGER.info("Creating sabor");
         return Response.status(Status.CREATED).entity(saborService.create(dto)).build();
     }
 
@@ -52,6 +60,7 @@ public class SaborResource {
     @Path("/{id}")
     @RolesAllowed("Admin")
     public Response update(@PathParam("id") Long id, SaborDTO dto) {
+        LOGGER.info("Updating sabor: " + dto);
         saborService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -60,6 +69,7 @@ public class SaborResource {
     @Path("/{id}")
     @RolesAllowed("Admin")
     public Response delete(@PathParam("id") Long id) {
+        LOGGER.info("Deleting sabor by id: " + id);
         saborService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.topicos1.model.Pedido;
 
 public record PedidoResponseDTO(
+    String status,
     Long id,
     ClienteResponseDTO cliente,
     Double total,
@@ -12,6 +13,7 @@ public record PedidoResponseDTO(
     List<BrinquedoPedidoResponseDTO> brinquedo,
     List<PetiscoPedidoResponseDTO> petisco,
     List<RemedioPedidoResponseDTO> remedio
+
 
 ) {
     public static PedidoResponseDTO valueOf(Pedido pedido) {
@@ -32,6 +34,7 @@ public record PedidoResponseDTO(
                                             .map(RemedioPedidoResponseDTO::valueOf)
                                             .toList();                                    
         return new PedidoResponseDTO(
+            pedido.getStatus(),
             pedido.getId(), 
             ClienteResponseDTO.valueOf(pedido.getCliente()),
             pedido.getTotal(),
